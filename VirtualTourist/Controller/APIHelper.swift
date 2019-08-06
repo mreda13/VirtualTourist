@@ -15,7 +15,7 @@ class APIHelper {
     static var baseURL = "https://www.flickr.com/services/rest/?"
     
     struct Auth {
-        static var key = "0e578d32f0eaae39c61902b6bdc84b52"
+        static var key = ""
     }
     
     enum Endpoints {
