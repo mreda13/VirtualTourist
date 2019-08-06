@@ -96,7 +96,7 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
                 completion(data)
             }
             catch {
-                
+                print(error)
             }
         }
     }
@@ -124,7 +124,7 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
             }
         }
         catch {
-            //handle error
+            print(error)
         }
         return photo
     }

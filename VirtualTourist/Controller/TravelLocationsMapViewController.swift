@@ -44,11 +44,15 @@ class TravelLocationsMapViewController: UIViewController {
         let pin = Pin(context: dataController.viewContext)
         pin.latitude = annonation.coordinate.latitude
         pin.longitude = annonation.coordinate.longitude
-        //TODO: add error handling
-        try? dataController.viewContext.save()
+        
+        do {
+            try dataController.viewContext.save()
+        }
+        catch {
+            print(error)
+        }
         
         mapView.addAnnotation(annonation)
-        
     }
     
     //MARK: Helper methods
@@ -90,17 +94,13 @@ class TravelLocationsMapViewController: UIViewController {
             pin = result[0]
         }
         catch {
-            //ERROR handling
+            let alertController = UIAlertController(title: "Error", message: "Pins cannot be fetched", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(alertAction)
+            present(alertController,animated: true)
         }
         return pin
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "photoAlbum" {
-            print("test")
-        }
-    }
-    
 }
 
 //MARK: MKMapViewDelegate extension
