@@ -114,25 +114,7 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         UserDefaults.standard.set(mapView.region.span.longitudeDelta , forKey: "spanLongitude")
         UserDefaults.standard.synchronize()
     }
-    
-    /*func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        let reuseId = "pin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            //pinView!.canShowCallout = true
-            pinView!.pinTintColor = .red
-            //pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
-    }*/
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as! PhotoAlbumViewController
         vc.pin = view.annotation

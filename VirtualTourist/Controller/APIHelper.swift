@@ -10,17 +10,17 @@ import Foundation
 
 
 class APIHelper {
-
+    
+    static var nonce:Int = 1
+    static var baseURL = "https://www.flickr.com/services/rest/?"
+    
     struct Auth {
         static var key = "0e578d32f0eaae39c61902b6bdc84b52"
     }
     
-    static var nonce:Int = 1
-    static var baseURL = "https://www.flickr.com/services/rest/?"
     enum Endpoints {
         
         case getPhotos(lat:Double,lon:Double,page:Int?)
-        //case getPhotoInfo(id:String)
         
         var stringValue:String {
             switch self {
@@ -33,7 +33,6 @@ class APIHelper {
                     URL = URL + "&page=\(page)"
                 }
                 URL = URL + "&format=json&nojsoncallback=1"
-                print(URL)
                 return URL
             }
         }
@@ -55,9 +54,6 @@ class APIHelper {
         task.resume()
     }
     
-    func getMorePhotos(){
-        
-    }
     class func getPhotos(lat: Double, lon: Double,page: Int?, completion: @escaping ([String]?,URLResponse?,Int,Error?)->Void) {
         
         let request = URLRequest(url: Endpoints.getPhotos(lat: lat, lon: lon, page: page).url)
@@ -75,16 +71,15 @@ class APIHelper {
                 }
                 return
             }
-            //print(data)
+            
             let decoder = JSONDecoder()
             
             do {
                 let jsonRes = try decoder.decode(SearchResponse.self, from: data)
-                //print(jsonRes)
                 let pages = jsonRes.photos.pages
                 let photos = jsonRes.photos.photo
-                //print(photos)
                 var photoIDs = [String]()
+                
                 for photo in photos {
                     photoIDs.append(photo.url)
                 }
@@ -96,7 +91,6 @@ class APIHelper {
                     else {
                         completion(photoIDs,response,pages,nil)
                     }
-                    
                 }
             }
             catch {

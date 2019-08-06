@@ -13,18 +13,15 @@ import CoreData
 class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
-    
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var newCollectionButton: UIButton!
-    
     @IBOutlet weak var noPhotosLabel: UILabel!
+    
     var dataController:DataController!
     var pin:MKAnnotation!
     var pinCoreData: Pin!
     var photosURL:[String]!
     var savedPhotos:[Photo]!
-    
     var photoFetchedResultsController:NSFetchedResultsController<Photo>?
     var photosFetchedResultsController:NSFetchedResultsController<Photo>?
     
@@ -38,13 +35,13 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
             savedPhotos = pinCoreData.photos?.sortedArray(using: [sortDescriptor]) as? [Photo]
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         newCollectionButton.isEnabled = false
         noPhotosLabel.isHidden = true
         setupMapView()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,10 +81,8 @@ class PhotoAlbumViewController: UIViewController , NSFetchedResultsControllerDel
         let adjustedRegion = self.mapView.regionThatFits(viewRegion)
         mapView.setRegion(adjustedRegion, animated: true)
         mapView.isUserInteractionEnabled = false
-        
     }
 
-    
     func photoObjectToImage(photo:Photo) -> UIImage {
         return UIImage(data: photo.imageData!)!
     }
@@ -198,7 +193,6 @@ extension PhotoAlbumViewController: MKMapViewDelegate {
         else {
             pinView!.annotation = annotation
         }
-        
         return pinView
     }
 }
@@ -271,19 +265,12 @@ extension PhotoAlbumViewController:UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let space:CGFloat = 1.0
-        //var dimension:CGFloat!
-        
-        //if UIDevice.current.orientation.isLandscape {
         let dimension = (view.frame.size.width - (space)) / 3
-        //} else {
-          //  dimension = (view.frame.size.width - (2 * space)) / 3.5
-        //}
-        
+
         return CGSize(width: dimension, height: dimension)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        
         return 0.0
     }
  
